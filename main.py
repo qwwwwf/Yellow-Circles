@@ -1,16 +1,17 @@
 import sys
 import random
 
-from PyQt6 import uic
+from ui import Ui_MainWindow
 from PyQt6.QtGui import QColor
 from PyQt6.QtWidgets import QApplication, QMainWindow, QGraphicsScene, QGraphicsEllipseItem
 
 
-class MainWindow(QMainWindow):
+class MainWindow(QMainWindow, Ui_MainWindow):
     def __init__(self):
         super(MainWindow, self).__init__()
-        uic.loadUi('UI.ui', self)
+        self.setupUi(self)
 
+        self.setWindowTitle('Colorful Circles')
         self.setFixedSize(400, 300)
 
         self.scene = QGraphicsScene(self)
@@ -23,14 +24,16 @@ class MainWindow(QMainWindow):
         x = random.randint(0, 380 - diameter)
         y = random.randint(0, 230 - diameter)
 
+        color = QColor(random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
+
         ellipse = QGraphicsEllipseItem(x, y, diameter, diameter)
-        ellipse.setBrush(QColor('#ebeb34'))
+        ellipse.setBrush(color)
         self.scene.addItem(ellipse)
 
     def add_circles(self) -> None:
         self.scene.clear()
 
-        for i in range(10):
+        for _ in range(10):
             self.add_circle()
 
 
